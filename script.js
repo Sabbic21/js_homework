@@ -1,4 +1,4 @@
-let money = prompt('Ваш месячный бюджет?'),
+let money = +prompt('Ваш месячный бюджет?'),
     time = prompt('Введите дату в формате YYYY-MM-DD');
 
 let appData = {
@@ -43,4 +43,36 @@ do {
     i++;
 } while(i < 2);
 
-alert("Ваш бюджет на день: " + appData.budget / 30);
+let detectDayBudget = () => {
+    let DayBudget = appData.budget / 30;
+    appData.DayBudget = DayBudget;
+    alert('Ваш бюджет на день: ' + DayBudget)
+    return DayBudget;
+};
+
+let detectLevel = () => {
+    if(appData.DayBudget <= 700) {
+        console.log('мне жаль');
+    } else if(appData.DayBudget > 700 && appData.DayBudget < 4000) {
+        console.log('средний заработок');
+    } else if(appData.DayBudget >= 4000) {
+        console.log('респект');
+    } else {
+        console.log('что-то пошло не так');
+    }
+};
+
+let chooseOptExpenses = () => {
+    let i = 1;
+    while(i < 4) {
+        let ansOpt = prompt('Статья необязательных расходов?');
+        
+        appData.optionalExpenses[i] = ansOpt;
+        i++;
+    }
+};
+
+console.log(appData);
+detectDayBudget();
+detectLevel();
+chooseOptExpenses();
