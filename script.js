@@ -1,5 +1,15 @@
-let money = +prompt('Ваш месячный бюджет?'),
+let money, time;
+
+let start = () => {
+    money = +prompt('Ваш месячный бюджет?');
     time = prompt('Введите дату в формате YYYY-MM-DD');
+
+    while (isNaN(money) || money == '' || money == null) {
+        money = +prompt('Ваш месячный бюджет?'); 
+    }
+};
+
+start();
 
 let appData = {
     budget: money,
@@ -35,18 +45,23 @@ let i = 0;
     i++; 
 };*/
 
-do {
-    let ansa = prompt('Введите обязательную статью расходов в этом месяце'),
-        ansb = prompt('Введите сумму');
+let chooseExpenses = () => {
+    do {
+        let ansA = prompt('Введите обязательную статью расходов в этом месяце'),
+            ansB = prompt('Введите сумму');
     
-    appData.expenses[ansa] = ansb;
-    i++;
-} while(i < 2);
+        if ((typeof(ansA)) === 'string' && (typeof(ansA)) != null && (typeof(ansB)) !== null
+            && ansA != '' && ansB != '') {
+                appData.expenses[ansA] = ansB;
+                i++;
+            } else {continue;}
+    } while(i < 2);
+};
 
 let detectDayBudget = () => {
-    let DayBudget = appData.budget / 30;
+    let DayBudget = (appData.budget / 30).toFixed();
     appData.DayBudget = DayBudget;
-    alert('Ваш бюджет на день: ' + DayBudget)
+    alert('Ваш бюджет на день: ' + DayBudget);
     return DayBudget;
 };
 
@@ -66,9 +81,20 @@ let chooseOptExpenses = () => {
     let i = 1;
     while(i < 4) {
         let ansOpt = prompt('Статья необязательных расходов?');
+        if ((typeof(ansOpt)) === 'string' && (typeof(ansOpt)) != null){
+            appData.optionalExpenses[i] = ansOpt;
+            i++;
+        } else {continue;}
+    }
+};
+
+let checkSavings = () => {
+    if (appData.savings == true) {
+        let save = +prompt('Введите сумму накоплений: '),
+            percent = +prompt('Под какой процент?');
         
-        appData.optionalExpenses[i] = ansOpt;
-        i++;
+        appData.monthIncome = save / 100 / 12 * percent;
+        alert('Месячный доход с депозита: ' + appData.monthIncome);
     }
 };
 
@@ -76,3 +102,5 @@ console.log(appData);
 detectDayBudget();
 detectLevel();
 chooseOptExpenses();
+chooseExpenses();
+checkSavings();
