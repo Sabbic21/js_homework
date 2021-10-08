@@ -74,11 +74,12 @@ let appData = {
             appData.income.push(prompt('Что-то еще?', ''));
             appData.income.sort();
         } else {alert('Вы не ввели строку!');}
-        alert('Способы доп. заработка: ')
+        let incomeOutput = '';
         appData.income.forEach(function(item, i) {
-            alert(i + ': ' + item);
+            incomeOutput += (i+1) + ': ' + item + '; ';
         });
-    },
+        alert('Способы доп. заработка: ' + incomeOutput);
+    }
 };
 
 console.log('Программа включает в себя данные:');
